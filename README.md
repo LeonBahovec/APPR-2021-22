@@ -2,10 +2,43 @@
 
 Vzorčni repozitorij za projekt pri predmetu APPR v študijskem letu 2021/22. 
 
-## Tematika
+## Analiza nepremičninskega trga v Sloveniji
 
-Izbrali si boste temo, s katero se bo vaš projekt ukvarjal.
-Tukaj boste napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
+V projektni nalogi bom analiziral nepremičninski trg v sloveniji. Predvsem se bom osredotočil na višino najemnin in pogodbenih cen pri nepremičninskih poslih. Poizkusil  bom ugotoviti, kaj naj bi najbolj ugodno vplivalo na rentabilnost morebitne naložbe v nepremičnino. Tu si nameravam tudi bolj podrobno ogledati demografske kazalce v posamezni občini in poizkusil ugotoviti, kako slednji vplivajo na višine najemnin v njej.
+
+Podatke o nepremičninskih poslih bom pridobil iz evidence trga nepremičnin, ki jih zagotavlja [GURS](https://egp.gu.gov.si/egp/). Podatke o demografskih kazalcih pa v [SURS-ovi podatkovni bazi](https://pxweb.stat.si/SiStatData/pxweb/sl/Data/Data/2640010S.px/). Shranjeni so v datoteki **podatki**.
+
+Za analizo bi podatke opazoval v naslednjih tabelah:
+
+1. Tabela najemnih poslov:
+-občina *(chr)*
+-mesecna najemnina *(dbl)*
+-leto posla *dbl*
+-površina *dbl*
+-uporabna površina *dbl* 
+-tip stavbe (poslovni prostor, bivalni prostor,...) *fctr*
+-leto izgradnje *dbl*
+
+
+2. Tabela kupoprodajnih poslov:
+-občina *chr*
+-pogodbena cena *dbl*
+-leto posla *dbl*
+-površina *dbl*
+-uporabna površina *dbl* 
+-tip stavbe (poslovni prostor, bivalni prostor,...) *fctr*
+-leto izgradnje *dbl*
+
+3. Tabela občin:
+-občina *chr*
+-površina občine *dbl*
+-število prebivalcev *dbl*
+-indeks staranja *dbl*
+-število študentov *dbl*
+-stopnja delovne aktivnosti *dbl*
+-povprečna mesečna bruto plača *dbl*
+
+
 
 ## Program
 

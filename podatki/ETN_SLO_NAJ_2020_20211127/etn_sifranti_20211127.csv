@@ -1,0 +1,358 @@
+ID;Numerična vrednost;Opis
+3;1;Zemljišče na katerem je mogoče graditi stavbo in ima gradbeno dovoljenje
+3;2;Zemljišče, na katerem je mogoče graditi stavbo in je komunalno opremljeno (priključki na vodo, elektriko in neposredni dostop do dovozne poti)
+3;3;Zemljišče, na katerem je ali bo mogoče graditi stavbo in je delno komunalno opremljeno ali komunalno neopremljeno
+3;4;Zemljišče, na katerem je ali bo mogoče graditi prometno ali energetsko infrastrukturo (cesta, plinovod in drugo)
+3;5;Zemljišče pod stavbo ali drugo stavbi ali delu stavbe pripadajoče zemljišče (zemljišče pod stavbo, dvorišče, dovozna pot, vrt, zelenica, stanovanjski atrij in podobno)
+3;6;Zemljišče, na katerem je cesta ali parkirišče
+3;7;Zemljišče za kmetijsko rabo (njiva, travnik, pašnik) 
+3;8;Zemljišče za kmetijsko rabo, na katerem je trajni nasad
+3;9;Zemljišče za gozdno rabo (gozd)
+3;10;Neplodno ali vodno zemljišče ali drugo neuporabno zemljišče
+5;1;I. gradbena faza
+5;2;II. gradbena faza
+5;3;III. gradbena faza
+5;4;III. podaljšana faza
+5;5;IV. gradbena faza
+5;6;V. gradbena faza
+6;1;Stanovanjska hiša
+6;2;Stanovanje
+6;3;Parkirni prostor
+6;4;Garaža
+6;5;Pisarniški prostori
+6;6;Prostori za poslovanje s strankami
+6;7;Prostori za zdravstveno dejavnost
+6;8;Trgovski ali storitveni lokal
+6;9;Gostinski lokal
+6;10;Prostori za šport, kulturo ali izobraževanje
+6;11;Industrijski prostori
+6;12;Turistični nastanitveni objekt
+6;13;Kmetijski objekt
+6;14;Tehnični ali pomožni prostori
+6;15;Drugo
+7;1;Fizična oseba
+7;2;Samostojni podjetnik ali fizicna oseba, ki samostojno opravlja dejavnost
+7;3;Gospodarska družba
+7;4;Državni organ
+7;5;Samoupravna lokalna skupnost
+7;6;Drugo
+13;1;Prvo pogodbena stranka
+13;2;Drugo pogodbena stranka
+14;1;Slovenija
+14;2;NERAZVRŠČENO
+14;3;Avstrija
+14;4;Belgija
+14;5;Bosna in Hercegovina
+14;6;Češka republika
+14;7;Črna Gora
+14;8;Danska
+14;9;Finska
+14;10;Francija
+14;11;Grčija
+14;12;Hrvaška
+14;13;Italija
+14;14;Madžarska
+14;15;Makedonija, Nekdanja jugoslovanska republika
+14;16;Nemčija
+14;17;Ruska federacija
+14;18;Srbija
+14;19;Švica
+14;20;Združene države
+14;21;Združeno kraljestvo
+14;22;Afganistan
+14;23;Alandski otoki
+14;24;Albanija
+14;25;Alžirija
+14;26;Ameriška Samoa
+14;27;Andora
+14;28;Angola
+14;29;Angvila
+14;30;Antarktika
+14;31;Antigva in Barbuda
+14;32;Argentina
+14;33;Armenija
+14;34;Aruba
+14;35;Avstralija
+14;36;Azerbajdžan
+14;37;Bahami
+14;38;Bahrajn
+14;39;Bangladeš
+14;40;Barbados
+14;41;Belize
+14;42;Belorusija
+14;43;Benin
+14;44;Bermudi
+14;45;Bocvana
+14;46;Bolgarija
+14;47;Bolivija
+14;48;Bouvetov otok
+14;49;Božični otok
+14;50;Brazilija
+14;51;Britansko ozemlje Indijskega oceana
+14;52;Brunej, Država
+14;53;Burkina Faso
+14;54;Burundi
+14;55;Butan
+14;56;Ciper
+14;57;Cookovi otoki
+14;58;Čad
+14;59;Čile
+14;60;Deviški otoki (britanski)
+14;61;Deviški otoki (ZDA)
+14;62;Dominika
+14;63;Dominikanska republika
+14;64;Džibuti
+14;65;Egipt
+14;66;Ekvador
+14;67;Ekvatorialna Gvineja
+14;68;Eritreja
+14;69;Estonija
+14;70;Etiopija
+14;71;Falklandski otoki (Malvini)
+14;72;Ferski otoki
+14;73;Fidži
+14;74;Filipini
+14;75;Francoska Gvajana
+14;76;Francoska Polinezija
+14;77;Francosko južno ozemlje
+14;78;Gabon
+14;79;Gambija
+14;80;Gana
+14;81;Gibraltar
+14;82;Grenada
+14;83;Grenlandija
+14;84;Gruzija
+14;85;Guadeloupe
+14;86;Guam
+14;87;Guernsey
+14;88;Gvajana
+14;89;Gvatemala
+14;90;Gvineja
+14;91;Gvineja Bissau
+14;92;Haiti
+14;93;Heardov otok in McDonaldovi otoki
+14;94;Honduras
+14;95;Hongkong
+14;96;Indija
+14;97;Indonezija
+14;98;Irak
+14;99;Iran (Islamska republika)
+14;100;Irska
+14;101;Islandija
+14;102;Izrael
+14;103;Jamajka
+14;104;Japonska
+14;105;Jemen
+14;106;Jersey
+14;107;Jordanija
+14;108;Južna Afrika
+14;109;Južna Georgia in otoki Južni Sandwich
+14;110;Kajmanski otoki
+14;111;Kambodža
+14;112;Kamerun
+14;113;Kanada
+14;114;Katar
+14;115;Kazahstan
+14;116;Kenija
+14;117;Kirgizistan
+14;118;Kiribati
+14;119;Kitajska
+14;120;Kokosovi (Keeling) otoki
+14;121;Kolumbija
+14;122;Komori
+14;123;Kongo
+14;124;Kongo, Demokratična republika
+14;125;Koreja, Demokratična ljudska republika
+14;126;Koreja, Republika
+14;127;Kostarika
+14;128;Kuba
+14;129;Kuvajt
+14;130;Laoška ljudska demokratična republika
+14;131;Latvija
+14;132;Lesoto
+14;133;Libanon
+14;134;Liberija
+14;135;Libijska arabska džamahirija
+14;136;Lihtenštajn
+14;137;Litva
+14;138;Luksemburg
+14;139;Macau
+14;140;Madagaskar
+14;141;Malavi
+14;142;Maldivi
+14;143;Malezija
+14;144;Mali
+14;145;Malta
+14;146;Maroko
+14;147;Marshallovi otoki
+14;148;Martinik
+14;149;Mauritius
+14;150;Mavretanija
+14;151;Mayotte
+14;152;Mehika
+14;153;Mikronezija (Federativne države)
+14;154;Mjanmar
+14;155;Moldavija, Republika
+14;156;Monako
+14;157;Mongolija
+14;158;Montserrat
+14;159;Mozambik
+14;160;Namibija
+14;161;Nauru
+14;162;Nepal
+14;163;Niger
+14;164;Nigerija
+14;165;Nikaragva
+14;166;Niue
+14;167;Nizozemska
+14;168;Nizozemski Antili
+14;169;Norfolški otok
+14;170;Norveška
+14;171;Nova Kaledonija
+14;172;Nova Zelandija
+14;173;Oman
+14;174;Otok Man
+14;175;Otoki Turks in Caicos
+14;176;Otoki Wallis in Futuna
+14;177;Pakistan
+14;178;Palau
+14;179;Palestinsko ozemlje, zasedeno
+14;180;Panama
+14;181;Papua Nova Gvineja
+14;182;Paragvaj
+14;183;Peru
+14;184;Pitcairn
+14;185;Poljska
+14;186;Portoriko
+14;187;Portugalska
+14;188;Reunion
+14;189;Romunija
+14;190;Ruanda
+14;191;Saint Helena
+14;192;Saint Kitts in Nevis
+14;193;Saint Lucia
+14;194;Saint Pierre in Miquelon
+14;195;Saint Vincent in Grenadine
+14;196;Salomonovi otoki
+14;197;Salvador
+14;198;Samoa
+14;199;San Marino
+14;200;Sao Tome in Principe
+14;201;Saudova Arabija
+14;202;Sejšeli
+14;203;Senegal
+14;204;Severni Marianski otoki
+14;205;Sierra Leone
+14;206;Singapur
+14;207;Sirska arabska republika
+14;208;Slonokoščena obala
+14;209;Slovaška
+14;210;Somalija
+14;211;Srednjeafriška republika
+14;212;Stranski zunanji otoki Združenih držav
+14;213;Sudan
+14;214;Surinam
+14;215;Svalbard in Jan Mayen
+14;216;Svazi
+14;217;Sveti sedež (Vatikanska mestna država)
+14;218;Španija
+14;219;Šrilanka
+14;220;Švedska
+14;221;Tadžikistan
+14;222;Tajska
+14;223;Tajvan, Provinca Kitajske
+14;224;Tanzanija, Združena republika
+14;225;Togo
+14;226;Tokelau
+14;227;Tonga
+14;228;Trinidad in Tobago
+14;229;Tunizija
+14;230;Turčija
+14;231;Turkmenistan
+14;232;Tuvalu
+14;233;Uganda
+14;234;Ukrajina
+14;235;Urugvaj
+14;236;Uzbekistan
+14;237;Vanuatu
+14;238;Venezuela
+14;239;Vietnam
+14;240;Vzhodni Timor
+14;241;Zahodna Sahara
+14;242;Zambija
+14;243;Združeni arabski emirati
+14;244;Zelenortski otoki
+14;245;Zimbabve
+14;247;Curacao
+14;248;Sveti Martin (Nizozemska)
+14;249;Bonaire, Sint Eustatius in Saba
+14;250;Južni Sudan
+14;251;Kosovo
+24;1;Prodaja nepremicnin na prostem trgu
+24;2;Prodaja nepremicnin na prostovoljni javni dražbi ali druga oblika prostovoljne javne prodaje
+24;3;Prodaja nepremicnin na javni dražbi ali druga oblika javne prodaje v izvršilnem postopku, prisilni poravnavi, stecaju ali stecajnem postopku
+24;4;Prodaja nepremicnin družinskim clanom, med povezanimi fizicnimi in pravnimi osebami ali med povezanimi pravnimi osebami
+24;5;Financni najem (lizing)
+24;6;Stavbna pravica - ustanovitev ali prenos
+24;7;Prodaja nepremicnine namesto razlastitve lastnika
+24;8;Razlastitev lastnika nepremicnine na podlagi zakona
+25;1;Oddajanje stavb ali njihovih delov na prostem trgu
+25;2;Oddajanje stavb ali njihovih delov med povezanimi fizicnimi ali pravnimi osebami
+25;3;Oddajanje denacionaliziranih stanovanjskih nepremicnin na podlagi upravne ali sodne odlocbe
+25;4;Drugo odplacno oddajanje
+25;5;Oddajanje stanovanjskih nepremicnin za najemnino, doloceno na podlagi zakona
+26;1;Določen čas
+26;2;Nedoločen čas
+27;1;Vinograd
+27;2;Oljčnik
+27;3;Intenzivni sadovnjak ? jablane 
+27;4;Intenzivni sadovnjak ? breskve 
+27;5;Intenzivni sadovnjak ? drugo
+27;6;Hmeljišče
+27;7;Ekstenzivni oz. travniški sadovnjak
+27;8;Ostali trajni nasadi
+27;9;Plantaža gozdnega drevja
+29;1;8,5%
+29;2;20,0%
+29;3;9,5%
+29;4;22,0%
+30;1;Stanovanjska hiša
+30;2;Stanovanje
+30;3;Parkirni prostor
+30;4;Garaža
+30;5;Pisarniški prostori
+30;6;Prostori za poslovanje s strankami
+30;7;Prostori za zdravstveno dejavnost
+30;8;Trgovski ali storitveni lokal
+30;9;Gostinski lokal
+30;10;Prostori za šport, kulturo ali izobraževanje
+30;11;Industrijski prostori
+30;12;Turistični nastanitveni objekt
+30;13;Kmetijski objekt
+30;14;Tehnični ali pomožni prostori
+30;15;Drugo
+30;16;Stanovanjska soba ali sobe
+33;1;Ustanovitev stavbne pravice za nezgrajeno stavbo
+33;2;Ustanovitev stavbne pravice za zgrajeno stavbo
+33;3;Prenos stavbne pravice za nezgrajeno stavbo
+33;4;Prenos stavbne pravice za zgrajeno stavbo
+33;5;Prodaja parcele, obremenjene s stavbno pravico
+42;1;Klet
+42;2;Pritličje
+42;3;Nadstropje
+64;0;Ne
+64;1;Da
+78;0;NEREGISTRIRAN
+78;1;REGISTRIRAN
+78;2;LOCIRAN
+83;1;Osnovna pogodba
+83;2;Aneks k pogodbi
+87;1;8,5%
+87;2;20,0%
+87;3;9,5%
+87;4;22,0%
+88;1;Tržen posel
+88;2;Tržen posel – neustrezni podatki
+88;3;Drug posel
+88;4;Neopredeljen posel
+88;5;V preverjanju

@@ -10,7 +10,7 @@ Podatke o nepremičninskih poslih bom pridobil iz evidence trga nepremičnin, ki
 
 Za analizo bi podatke opazoval v naslednjih tabelah:
 
-1. Tabela najemnih poslov:
+1. Tabela najemniških poslov:
 - občina *chr*
 - mesecna najemnina *dbl*
 - leto posla *dbl*

@@ -4,7 +4,7 @@ Vzorčni repozitorij za projekt pri predmetu APPR v študijskem letu 2021/22.
 
 ## Analiza nepremičninskega trga v Sloveniji
 
-V projektni nalogi bom analiziral nepremičninski trg v sloveniji. Predvsem se bom osredotočil na višino najemnin in pogodbenih cen pri nepremičninskih poslih. Poizkusil  bom ugotoviti, kaj naj bi najbolj ugodno vplivalo na rentabilnost morebitne naložbe v nepremičnino. Tu si nameravam tudi bolj podrobno ogledati demografske kazalce v posamezni občini in poizkusil ugotoviti, kako slednji vplivajo na višine najemnin v njej.
+V projektni nalogi bom analiziral nepremičninski trg v Sloveniji. Predvsem se bom osredotočil na višino najemnin in pogodbenih cen pri nepremičninskih poslih. Poizkusil  bom ugotoviti, kaj naj bi najbolj ugodno vplivalo na rentabilnost morebitne naložbe v nepremičnino. Tu si nameravam tudi bolj podrobno ogledati demografske kazalce v posamezni občini in poizkusil ugotoviti, kako slednji vplivajo na višine najemnin v njej.
 
 Podatke o nepremičninskih poslih bom pridobil iz evidence trga nepremičnin, ki jih zagotavlja [GURS](https://egp.gu.gov.si/egp/. Podatke o demografskih kazalcih pa v [SURS-ovi podatkovni bazi](https://pxweb.stat.si/SiStatData/pxweb/sl/Data/Data/2640010S.px/). Shranjeni so v datoteki **podatki**.
 

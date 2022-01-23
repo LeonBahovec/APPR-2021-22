@@ -7,6 +7,8 @@ library(shiny)
 library(readr)
 library(tidyverse)
 library(dplyr)
+library(stringr)
+
 #test
 
 

@@ -49,7 +49,7 @@ for (i in 2013:2020){
   if (i == 2013){
     tabela.najemnin = zdruzeno
   } else{
-    tabela.najemnin = rbind(tabela1, zdruzeno)
+    tabela.najemnin = rbind(tabela.najemnin, zdruzeno)
   }
   
 }
@@ -101,6 +101,59 @@ for (i in 2013:2020){
   
 }
 
-  
+
+#3 Tabela občin:
+
+obcine = read_csv(
+  "podatki/obcine.csv", 
+  skip = 2,
+  locale = locale(encoding = "Windows-1250"),
+  col_types = cols(
+    .default = col_guess(),
+    "2008" = col_double(),
+    "2009" = col_double(),
+    "2010" = col_double(),
+    "2011" = col_double(),
+    "2012" = col_double(),
+    "2013" = col_double(),
+    "2014" = col_double(),
+    "2021" = col_double()
+  )
+  )
+
+
+obcine = pivot_longer(obcine,
+                      cols = (colnames(obcine)[3:16]),
+                      names_to = "leto",
+                      values_to = "vrednost"
+                      )
+
+
+
+
+obcine_meritve1 = obcine %>% filter(MERITVE == "Površina (km2) - 1. januar") %>% mutate(povrsina = vrednost) %>% select(leto, obcina = colnames(obcine)[2], povrsina = vrednost)
+obcine_meritve2 = obcine %>% filter(MERITVE == "Število prebivalcev - 1. januar") %>% mutate(povrsina = vrednost) %>% select(leto, obcina = colnames(obcine)[2], stevilo.prebivalcev = vrednost)
+obcine_meritve3 = obcine %>% filter(MERITVE == "Skupni prirast") %>% mutate(povrsina = vrednost) %>% select(leto, obcina = colnames(obcine)[2], skupni.prirast = vrednost)
+obcine_meritve4 = obcine %>% filter(MERITVE == "Indeks staranja - 1. januar") %>% mutate(povrsina = vrednost) %>% select(leto, obcina = colnames(obcine)[2], indeks.staranja = vrednost)
+obcine_meritve5 = obcine %>% filter(MERITVE == obcine$MERITVE[14264]) %>% mutate(povrsina = vrednost) %>% select(leto, obcina = colnames(obcine)[2], stevilo.studentov = vrednost)
+obcine_meritve6 = obcine %>% filter(MERITVE == "Stopnja delovne aktivnosti (%)") %>% mutate(povrsina = vrednost) %>% select(leto, obcina = colnames(obcine)[2], stopnja.delovne.aktivnosti = vrednost)
+obcine_meritve7 = obcine %>% filter(MERITVE == obcine$MERITVE[20873]) %>% mutate(povrsina = vrednost) %>% select(leto, obcina = colnames(obcine)[2], bruto.mesecna.placa = vrednost)
+
+
+zdruzi = obcine_meritve1
+zdruzi = left_join(zdruzi, obcine_meritve2, by = c("leto", "obcina"))
+zdruzi = left_join(zdruzi, obcine_meritve3, by = c("leto", "obcina"))
+zdruzi = left_join(zdruzi, obcine_meritve4, by = c("leto", "obcina"))
+zdruzi = left_join(zdruzi, obcine_meritve5, by = c("leto", "obcina"))
+zdruzi = left_join(zdruzi, obcine_meritve6, by = c("leto", "obcina"))
+obcine.koncno = left_join(zdruzi, obcine_meritve7, by = c("leto", "obcina"))
+
+
+
+
+
+
+
+
 
 

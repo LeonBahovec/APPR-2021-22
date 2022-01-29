@@ -10,7 +10,11 @@ sl <- locale("sl", decimal_mark=",", grouping_mark=".")
 
 for (i in 2013:2020){
 
-  najem.delistavb = read_csv2(sprintf("podatki/ETN_SLO_NAJ_%s_20211127/ETN_SLO_NAJ_%s_delistavb_20211127.csv",i, i))
+  najem.delistavb = read_csv2(sprintf("podatki/ETN_SLO_NAJ_%s_20211127/ETN_SLO_NAJ_%s_delistavb_20211127.csv",i, i),
+                              col_types = cols(
+                                .default = col_guess(),
+                                "Uporabna površina dela stavbe" = col_double()
+                              ))
   
   najem.posli = read_csv2(sprintf("podatki/ETN_SLO_NAJ_%s_20211127/ETN_SLO_NAJ_%s_posli_20211127.csv", i, i))
   
@@ -53,7 +57,50 @@ for (i in 2013:2020){
   }
   
 }
-  
+
+#FML = tabela.najemnin
+
+tabela.najemnin = FML
+
+tabela.najemnin = tabela.najemnin %>% mutate(obcina = tolower(obcina)) %>% mutate(obcina = str_to_sentence(obcina)) %>%
+  select(-id.posla)
+
+etn.sifrant.najemnine = tibble(
+  "tip.stavbe" = c(1:16),
+  "etn.tip.prostora" = c(
+    "Stanovanjska hisa", 
+    "Stanovanje", 
+    "Parkirni prostor",
+    "Garaza",
+    "Pisarniski prostori",
+    "Prostori za poslovanje s strankami",
+    "Prostori za zdravstveno dejavnost",
+    "Trgovski ali storitveni lokal",
+    "Gostinski lokal",
+    "Prostori za sport, kulturo ali izobrazevanje",
+    "Industrijski prostori",
+    "Turisticni nastanitveni objekt",
+    "Kmetijski objekt",
+    "Tehnicni ali pomozni prostori",
+    "Drugo",
+    "Stanovanjska soba ali sobe")
+               )
+
+tabela.najemnin = tabela.najemnin %>% left_join(etn.sifrant.najemnine, by="tip.stavbe") %>% select(
+  obcina, mesecna.najemnina, povrsina, uporabna.povrsina, tip.prostora = etn.tip.prostora, leto.izgradnje, leto.posla
+) 
+
+tabela.najemnin = tabela.najemnin %>%  filter(tip.prostora != "Stanovanjska soba ali sobe") %>% mutate(uporabna.povrsina = as.numeric(uporabna.povrsina)) %>% 
+  mutate(tip.prostora = as.factor(tip.prostora))
+
+#odstranjevanje nesmiselnih vnosov:
+
+tabela.najemnin = tabela.najemnin %>% filter(povrsina >= (uporabna.povrsina) & uporabna.povrsina >= 0.7 * povrsina) %>% 
+  filter(povrsina != 0)  %>%  
+  mutate(najemnina.na.kvadratni.meter = mesecna.najemnina / povrsina) %>% 
+  filter(najemnina.na.kvadratni.meter < 100 & najemnina.na.kvadratni.meter > 0.5) %>% select(-najemnina.na.kvadratni.meter)
+
+
   
 #2. Tabela kupoprodajnih poslov:
 
@@ -101,6 +148,51 @@ for (i in 2013:2020){
   
 }
 
+FML2 = tabela.nakupov
+
+tabela.nakupov = FML2
+
+etn.sifrant.nakupi = tibble(
+  "tip.stavbe" = c(1:15),
+  "etn.tip.prostora" = c(
+    "Stanovanjska hisa", 
+    "Stanovanje", 
+    "Parkirni prostor",
+    "Garaza",
+    "Pisarniski prostori",
+    "Prostori za poslovanje s strankami",
+    "Prostori za zdravstveno dejavnost",
+    "Trgovski ali storitveni lokal",
+    "Gostinski lokal",
+    "Prostori za sport, kulturo ali izobrazevanje",
+    "Industrijski prostori",
+    "Turisticni nastanitveni objekt",
+    "Kmetijski objekt",
+    "Tehnicni ali pomozni prostori",
+    "Drugo")
+)
+
+tabela.nakupov = tabela.nakupov %>% mutate(obcina = tolower(obcina)) %>%mutate(obcina = str_to_sentence(obcina)) %>% 
+  select(-id.posla)
+
+tabela.nakupov = tabela.nakupov %>% left_join(etn.sifrant.nakupi, by="tip.stavbe") %>%
+  select(obcina, prodajna.cena, povrsina, uporabna.povrsina, tip.prostora = etn.tip.prostora, leto.izgradnje, leto.posla)
+
+tabela.nakupov = tabela.nakupov %>% mutate(tip.prostora = as.factor(tip.prostora))
+
+#odstranjevanje nesmiselnih vnosov:
+tabela.nakupov = tabela.nakupov %>% filter(povrsina >= (uporabna.povrsina) & uporabna.povrsina >= 0.7 * povrsina) %>% 
+  filter(prodajna.cena >= 10) %>% filter(prodajna.cena / povrsina <= 10000)
+
+
+
+
+
+
+
+
+
+
 
 #3 Tabela občin:
 
@@ -146,10 +238,50 @@ zdruzi = left_join(zdruzi, obcine_meritve3, by = c("leto", "obcina"))
 zdruzi = left_join(zdruzi, obcine_meritve4, by = c("leto", "obcina"))
 zdruzi = left_join(zdruzi, obcine_meritve5, by = c("leto", "obcina"))
 zdruzi = left_join(zdruzi, obcine_meritve6, by = c("leto", "obcina"))
-obcine.koncno = left_join(zdruzi, obcine_meritve7, by = c("leto", "obcina"))
+tabela.obcin = left_join(zdruzi, obcine_meritve7, by = c("leto", "obcina"))
+
+tabela.obcin = obcine.koncno %>% filter(leto != 2021) %>% mutate(obcina = str_to_sentence(obcina))
+
+
+tabela.obcin = tabela.obcin %>% mutate(obcina = str_replace(obcina, "([:alpha:]*)/[:alpha:]*", "\\1")) %>%
+  mutate(obcina = str_replace(obcina, "([:alpha:]*)\\s-\\s([:alpha:]*)", "\\1-\\2"))
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+odstrani = function(){
+  rm(etn_sifrant)
+  rm(obcine_meritve7)
+  rm(obcine_meritve6)
+  rm(obcine_meritve5)
+  rm(obcine_meritve4)
+  rm(obcine_meritve3)
+  rm(obcine_meritve2)
+  rm(obcine_meritve1)
+  rm(obcine.koncno)
+  rm(zdruzi)
+  rm(zdruzeno)
+}
+rm(zdruzi)
+rm(zdruzeno)
+rm(obcine.koncno)
+rm(obcine)
+rm(nakup.delistavb)
+rm(nakup.posli)
+rm(najem.delistavb)
+rm(najem.posli)
 
 
 

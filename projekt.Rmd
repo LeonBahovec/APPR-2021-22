@@ -1,6 +1,6 @@
 ---
-title: "Poročilo pri predmetu Analiza podatkov s programom R"
-author: "Študent FMF"
+title: "Analiza nepremičninskega trga v Sloveniji"
+author: "Leon Bahovec"
 output:
   html_document: default
   pdf_document:
@@ -15,37 +15,66 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
 
 # Uvoz vseh potrebnih knjižnic
 source("lib/libraries.r", encoding="UTF-8")
+
 ```
 
 
 ## Izbira teme
 
 ***
+V projektni nalogi bom analiziral nepremičninski trg v Sloveniji. Predvsem se bom osredotočil na višino najemnin in pogodbenih cen pri nepremičninskih poslih. Poizkusil  bom ugotoviti, kaj naj bi najbolj ugodno vplivalo na rentabilnost oz. donosnost morebitne naložbe v nepremičnino. Tu si nameravam tudi bolj podrobno ogledati demografske kazalce v posamezni občini in poizkusil ugotoviti, kako slednji vplivajo na višine najemnin, cen, ter posledično rentabilnosti nepremičnin v njej.
+
+
 
 ## Obdelava, uvoz in čiščenje podatkov
 
+Podatke o nepremičninskih poslih sem pridobil iz evidence trga nepremičnin, ki jih zagotavlja [GURS](https://egp.gu.gov.si/egp/). Podatke o demografskih kazalcih pa v [SURS-ovi podatkovni bazi](https://pxweb.stat.si/SiStatData/pxweb/sl/Data/Data/2640010S.px/). Podatke sem nato uredil v sledeče 3 tabele, kot navedeno pri predstavitvi izbire teme projekta.
+
+
+
 ```{r uvoz}
 source("uvoz/uvoz.r", encoding="UTF-8")
+kable(head(tabela.najemnin), caption = "Tabela 1: najemniški posli v sloveniji 2013 - 2020")
+kable(head(tabela.nakupov), caption = "Tabela 2: kupoprodajni posli v sloveniji 2013 - 2020")
+kable(head(tabela.obcin), caption = "Tabela 3: tabela demografskih kazalcev občin 2013 - 2020")
 ```
+
+Nekaj o problemih ETN-ja
+
 
 ***
 
 ## Analiza in vizualizacija podatkov
 
-```{r vizualizacija, results='hide'}
+
+
+```{r vizualizacija, echo=FALSE}
+
 source("vizualizacija/vizualizacija.r", encoding="UTF-8")
+inputPanel(
+  selectInput(
+    "tip.prostora",
+    label = "Tip prostora",
+    choices = c("Stanovanje", "Vse"),
+    selected = "Vse"
+  )
+)
+renderPlot({graf.skozi.cas(input$tip.prostora, "najemnina")})
+
+print(graf.rentabilnost.tip.prostora)
+print(regije.zemljevid)
 ```
 
 ***
 
 ## Napredna analiza podatkov
 
-```{r analiza}
-source("analiza/analiza.r", encoding="UTF-8")
-```
+%```{r analiza}
+%source("analiza/analiza.r", encoding="UTF-8")
+%```
 
 ***
 
-```{r shiny}
-#shinyAppDir("shiny", options=list(width="100%", height=600))
-```
+%```{r shiny}
+%#shinyAppDir("shiny", options=list(width="100%", height=600))
+%```

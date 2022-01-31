@@ -9,7 +9,13 @@ library(tidyverse)
 library(dplyr)
 library(stringr)
 library(ggplot2)
-
+library(terra)
+library(mosaic)
+library(sp)
+library(rgdal)
+library(rgeos)
+library(maptools)
+library(ranger)
 #test
 
 
@@ -18,4 +24,3 @@ options(gsubfn.engine="R")
 # Uvozimo funkcije za pobiranje in uvoz zemljevida.
 source("lib/uvozi.zemljevid.r", encoding="UTF-8")
 
-"." == "a"

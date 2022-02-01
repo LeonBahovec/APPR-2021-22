@@ -79,6 +79,7 @@ graf.skozi.cas = function(tip, aspekt){
   return(graf)
 }
 
+graf.skozi.cas("Tehnicni ali pomozni prostori", "rentabilnost")
 
 
 
@@ -151,7 +152,7 @@ slo.regije.centroidi = slo.regije.centroidi %>% rownames_to_column() %>%
     regija = replace(regija, regija == "Spodnjeposavska", "Posavska")
   )
 slo.regije.centroidi %>% write_csv("podatki/regije-centroidi.csv")
-print(slo.regije.centroidi)
+#print(slo.regije.centroidi)
 
 #ggplot() +
 #  geom_polygon(
@@ -210,7 +211,7 @@ regije.s.pripadnostjo = left_join(povprecna.najemnina.obcina, obcine.regije) %>%
   select(regija, povprecna.najemnina = povprecna.najemnina.regija, povprecna.cena = povprecna.cena.regija) %>%
   distinct() %>% na.omit() %>% mutate("povprecna.rentabilnost" = 1200 * povprecna.najemnina / povprecna.cena) 
 
-regije.zemljevid = left_join(regije.s.pripadnostjo, slo.regije.poligoni) %>%
+regije.zemljevid.rentabilnost = left_join(regije.s.pripadnostjo, slo.regije.poligoni) %>%
   ggplot() + 
   geom_polygon(
     mapping = aes(long, lat, group = group, fill = povprecna.rentabilnost),
@@ -234,7 +235,29 @@ regije.zemljevid = left_join(regije.s.pripadnostjo, slo.regije.poligoni) %>%
   ) +
   labs(title = "Rentabilnost glede na regijo")
 
-
+regije.zemljevid.najemnine = left_join(regije.s.pripadnostjo, slo.regije.poligoni) %>%
+  ggplot() + 
+  geom_polygon(
+    mapping = aes(long, lat, group = group, fill = povprecna.najemnina),
+    color = "grey"
+  ) + 
+  labs(fill = bquote("Najemnina na"~ m^2)) + 
+  coord_map() +
+  theme_classic() +
+  theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text = element_blank(),
+    axis.title = element_blank()
+  ) +
+  geom_text(
+    data = slo.regije.centroidi,
+    mapping = aes(x = long, y = lat, label = regija),
+    size = 3,
+    fontface ="bold.italic",
+    color = "black"
+  ) +
+  labs(title = "Višina najemnin glede na regijo")
 
 #Povprecna donostnost glede na tip prostora
 
@@ -250,6 +273,8 @@ povprecna.rentabilnost = povprecna.cena.tip.prostora %>% left_join(povprecna.naj
 graf.rentabilnost.tip.prostora = povprecna.rentabilnost %>% arrange(povprecna.rentabilnost) %>% ggplot(mapping = aes(x = reorder(tip.prostora, povprecna.rentabilnost), y = povprecna.rentabilnost)) + 
   geom_bar(stat="identity") + labs(x = "Tip prostora", y = "Letna rentabilnost (%)", title = "Rentabilnost glede na tip prostora") + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
 
 
 

@@ -48,22 +48,63 @@ Nekaj o problemih ETN-ja
 
 
 
-```{r vizualizacija, echo=FALSE}
+```{r vizualizacija, include=FALSE}
 
+source("vizualizacija/vizualizacija.r", encoding="UTF-8")
+
+
+```
+
+
+```{r izbira.tipa, echo=FALSE}
 source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 inputPanel(
   selectInput(
     "tip.prostora",
     label = "Tip prostora",
-    choices = c("Stanovanje", "Vse"),
+    choices = c("Stanovanje", 
+                "Stanovanjska hisa", 
+                "Parkirni prostor", 
+                "Pisarniski prostori", 
+                "Industrijski prostori", 
+                "Garaza",
+                "Tehnicni ali pomozni prostori",
+                "Trgovski ali storitveni lokal",
+                "Gostinski lokal", 
+                "Prostori za zdravstveno dejavnost",
+                "Prostori za poslovanje s strankami",
+                "Kmetijski objekt",
+                "Turisticni nastanitveni objekt",
+                "Prostori za sport, kulturo ali izobraževanje",
+                "Drugo",
+                "Vse"),
     selected = "Vse"
+  ),
+    selectInput(
+    "tip.grafa",
+    label = "Tip grafa:",
+    choices = c("najemnina", "rentabilnost", "cena"),
+    selected = "rentabilnost"
   )
 )
-renderPlot({graf.skozi.cas(input$tip.prostora, "najemnina")})
 
-print(graf.rentabilnost.tip.prostora)
-print(regije.zemljevid)
 ```
+
+
+```{r graf1, echo=FALSE}
+renderPlot({graf.skozi.cas(input$tip.prostora, input$tip.grafa)})
+```
+
+
+
+```{r graf2, echo=FALSE}
+print(graf.rentabilnost.tip.prostora)
+print(regije.zemljevid.rentabilnost)
+print(regije.zemljevid.najemnine)
+```
+
+Tu še malo pišem
+
 
 ***
 

@@ -40,14 +40,31 @@ print(lin.model.cena)
 lin.model.najemnina = lm(povprecna.najemnina ~ ., data = tabela.obcin.ucenje.najemnine)
 print(lin.model.najemnina)
 
+lin.model.rentabilnost = lm(povprecna.rentabilnost ~ ., data = tabela.obcin.ucenje.rentabilnost)
+print(lin.model.rentabilnost)
 
-lm.napovedi.rentabilnost = predict(lin.model, newdata = tabela.obcin.ucenje.rentabilnost)
+
+lm.napovedi.rentabilnost = predict(lin.model.rentabilnost, newdata = tabela.obcin.ucenje.rentabilnost)
 print(lm.napovedi.rentabilnost)
+
+napaka = function(podatki, model, spremenljivka) {
+  podatki %>%
+    bind_cols(Yhat = predict(model, podatki)) %>%
+    mutate(
+      izguba = abs(spremenljivka - Yhat)
+    ) %>%
+    select(izguba) %>%
+    unlist() %>%
+    mean()
+}
+
+napaka(tabela.obcin.ucenje.cena, lin.model.cena, tabela.obcin.ucenje.cena$povprecna.cena)
+napaka(tabela.obcin.ucenje.najemnine, lin.model.najemnina, tabela.obcin.ucenje.najemnine$povprecna.najemnina)
+
 
 #poskusimo še napoved z naključnimi gozdovi
 
 set.seed(420)
-
 ng.reg.model.cena = ranger(povprecna.cena ~ ., data = tabela.obcin.ucenje.cena)
 ng.reg.model.najemnina = ranger(povprecna.najemnina ~ ., data = tabela.obcin.ucenje.najemnine)
 ng.reg.model.rentabilnost = ranger(povprecna.rentabilnost ~., data = tabela.obcin.ucenje.rentabilnost)
@@ -56,14 +73,59 @@ print(ng.reg.model.najemnina)
 print(ng.reg.model.rentabilnost)
 
 
-## prečno preverjanje
+## gručenje
+
+tip.prostora.cene = tabela.nakupov %>% group_by(tip.prostora) %>% 
+  mutate(povprecna.cena = mean(prodajna.cena / povrsina)) %>% select(tip.prostora, povprecna.cena) %>%
+  distinct()
+tip.prostora.grucenje = tabela.najemnin %>% group_by(tip.prostora) %>% 
+  mutate(povprecna.najemnina = mean(100 * mesecna.najemnina / povrsina)) %>% select(tip.prostora, povprecna.najemnina) %>%
+  distinct() %>% left_join(tip.prostora.cene)
+
+
+primeri = tibble(
+  oznaka = tip.prostora.grucenje$tip.prostora,
+  x = tip.prostora.grucenje$povprecna.najemnina,
+  y = tip.prostora.grucenje$povprecna.cena
+)
+
+dendrogram = primeri[, -1] %>%
+  dist() %>%
+  hclust()
 
 
 
 
+skupine.3 = dendrogram %>% cutree(k = 3) %>% as.ordered()
+print(skupine.3)
 
+skupine = function(i){
+  skup = dendrogram %>% cutree(k = i) %>% as.ordered()
+}
 
+diagram.skupine = function(podatki, oznake, skupine, k) {
+  podatki = podatki %>%
+    bind_cols(skupine) %>%
+    rename(skupina = ...4)
+  
+  d = podatki %>%
+    ggplot(
+      mapping = aes(
+        x = x / 100, y = y, color = skupina
+      )
+    ) +
+    labs(x = bquote("najemnina na"~m^2), y = bquote("cena na "~m^2), title = "Skupine tipov stanovanj") +
+    geom_point() +
+    geom_label(label = oznake, size = 2.5) +
+    scale_color_hue() +
+    theme_classic() +
+    xlim(3, 14) +
+    ylim(500, 1400)
+  
+  d
+}
 
+print(diagram.skupine(primeri, primeri$oznaka, skupine(3), 3))
 
 
 

@@ -79,7 +79,6 @@ graf.skozi.cas = function(tip, aspekt){
   return(graf)
 }
 
-graf.skozi.cas("Tehnicni ali pomozni prostori", "rentabilnost")
 
 
 

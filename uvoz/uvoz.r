@@ -239,7 +239,8 @@ zdruzi = left_join(zdruzi, obcine_meritve5, by = c("leto", "obcina"))
 zdruzi = left_join(zdruzi, obcine_meritve6, by = c("leto", "obcina"))
 tabela.obcin = left_join(zdruzi, obcine_meritve7, by = c("leto", "obcina"))
 
-tabela.obcin = tabela.obcin %>% filter(leto != 2021) %>% filter(leto < 2013) %>% mutate(obcina = str_to_sentence(obcina))
+tabela.obcin = tabela.obcin %>% filter(leto != 2021) %>% filter(leto > 2013) %>%
+  mutate(obcina = str_to_sentence(obcina)) %>% filter(obcina != "Slovenija")
 
 
 tabela.obcin = tabela.obcin %>% mutate(obcina = str_replace(obcina, "([:alpha:]*)/[:alpha:]*", "\\1")) %>%

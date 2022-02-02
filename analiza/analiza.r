@@ -140,3 +140,4 @@ print(diagram.skupine(primeri, primeri$oznaka, skupine(3), 3))
 
 
 
+

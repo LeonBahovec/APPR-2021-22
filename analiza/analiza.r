@@ -37,15 +37,25 @@ tabela.obcin.ucenje.cena = tabela.obcin.ucenje.cena[-1]
 lin.model.cena = lm(povprecna.cena ~ ., data = tabela.obcin.ucenje.cena)
 print(lin.model.cena)
 
-lin.model.najemnina = lm(povprecna.najemnina ~ ., data = tabela.obcin.ucenje.najemnine)
+lin.model.najemnina = lm(250*povprecna.najemnina ~ ., data = tabela.obcin.ucenje.najemnine)
 print(lin.model.najemnina)
 
-lin.model.rentabilnost = lm(povprecna.rentabilnost ~ ., data = tabela.obcin.ucenje.rentabilnost)
+lin.model.rentabilnost = lm(250*povprecna.rentabilnost ~ ., data = tabela.obcin.ucenje.rentabilnost)
 print(lin.model.rentabilnost)
 
 
 lm.napovedi.rentabilnost = predict(lin.model.rentabilnost, newdata = tabela.obcin.ucenje.rentabilnost)
 print(lm.napovedi.rentabilnost)
+
+vektor.imen = names(summary(lin.model.cena)$coefficients[,1][-1])
+vektor.koeficientov.cena = unname(summary(lin.model.cena)$coefficients[,1][-1])
+vektor.koeficientov.najemnina = unname(summary(lin.model.najemnina)$coefficients[,1][-1])
+vektor.koeficientov.rentabilnost = unname(summary(lin.model.rentabilnost)$coefficients[,1][-1])
+
+linearni.modeli = tibble("znacilnost" = vektor.imen,
+                         "koeficient lm cen" = round(vektor.koeficientov.cena, 2),
+                         "koeficienti lm najemnin" = round(vektor.koeficientov.najemnina,2),
+                         "koeficienti lm rentabilnost" = round(vektor.koeficientov.rentabilnost,2))
 
 napaka = function(podatki, model, spremenljivka) {
   podatki %>%
@@ -62,15 +72,16 @@ napaka(tabela.obcin.ucenje.cena, lin.model.cena, tabela.obcin.ucenje.cena$povpre
 napaka(tabela.obcin.ucenje.najemnine, lin.model.najemnina, tabela.obcin.ucenje.najemnine$povprecna.najemnina)
 
 
-#poskusimo še napoved z naključnimi gozdovi
 
-set.seed(420)
-ng.reg.model.cena = ranger(povprecna.cena ~ ., data = tabela.obcin.ucenje.cena)
-ng.reg.model.najemnina = ranger(povprecna.najemnina ~ ., data = tabela.obcin.ucenje.najemnine)
-ng.reg.model.rentabilnost = ranger(povprecna.rentabilnost ~., data = tabela.obcin.ucenje.rentabilnost)
-print(ng.reg.model.cena)
-print(ng.reg.model.najemnina)
-print(ng.reg.model.rentabilnost)
+
+
+
+
+
+
+
+
+
 
 
 ## gručenje
@@ -92,6 +103,99 @@ primeri = tibble(
 dendrogram = primeri[, -1] %>%
   dist() %>%
   hclust()
+
+plot(
+  dendrogram,
+  labels = primeri$oznaka,
+  ylab = "višina",
+  main = NULL
+)
+
+tibble(
+  k = 14:1,
+  visina = dendrogram$height
+) %>%
+  ggplot() +
+  geom_line(
+    mapping = aes(x = k, y = visina),
+    color = "red"
+  ) +
+  geom_point(
+    mapping = aes(x = k, y = visina),
+    color = "red"
+  ) +
+  scale_x_continuous(
+    breaks = 14:1
+  ) +
+  labs(
+    x = "število skupin (k)",
+    y = "višina združevanja"
+  ) +
+  theme_classic()
+
+hc.kolena = function(dendrogram, od = 1, do = NULL, eps = 0.5) {
+  # število primerov in nastavitev parametra do
+  n = length(dendrogram$height) + 1
+  if (is.null(do)) {
+    do = n - 1
+  }
+  # k.visina je tabela s štirimi stolpci
+  # (1) k, število skupin
+  # (2) višina združevanja
+  # (3) sprememba višine pri združevanju
+  # (4) koleno: ali je točka koleno?
+  k.visina = tibble(
+    k = as.ordered(od:do),
+    visina = dendrogram$height[do:od]
+  ) %>%
+    # sprememba višine
+    mutate(
+      dvisina = visina - lag(visina)
+    ) %>%
+    # ali se je intenziteta spremembe dovolj spremenila?
+    mutate(
+      koleno = lead(dvisina) - dvisina > eps
+    )
+  k.visina
+}
+
+# iz tabele k.visina vrne seznam vrednosti k,
+# pri katerih opazujemo koleno
+hc.kolena.k = function(k.visina) {
+  k.visina %>%
+    filter(koleno) %>%
+    select(k) %>%
+    unlist() %>%
+    as.character() %>%
+    as.integer()
+}
+
+# izračunamo tabelo s koleni za dendrogram
+r = hc.kolena(dendrogram)
+
+# narišemo diagram višin združevanja
+diagram.kolena = function(k.visina) {
+  k.visina %>% ggplot() +
+    geom_point(
+      mapping = aes(x = k, y = visina),
+      color = "red"
+    ) +
+    geom_line(
+      mapping = aes(x = as.integer(k), y = visina),
+      color = "red"
+    ) +
+    geom_point(
+      data = k.visina %>% filter(koleno),
+      mapping = aes(x = k, y = visina),
+      color = "blue", size = 2
+    ) +
+    ggtitle(paste("Kolena:", paste(hc.kolena.k(k.visina), collapse = ", "))) +
+    xlab("število skupin (k)") +
+    ylab("razdalja pri združevanju skupin") +
+    theme_classic()
+}
+
+diagram.kolena(r)
 
 
 
@@ -116,7 +220,7 @@ diagram.skupine = function(podatki, oznake, skupine, k) {
     ) +
     labs(x = bquote("najemnina na"~m^2), y = bquote("cena na "~m^2), title = "Skupine tipov stanovanj") +
     geom_point() +
-    geom_label(label = oznake, size = 2.5) +
+    geom_label(label = oznake, size = 3.5) +
     scale_color_hue() +
     theme_classic() +
     xlim(3, 14) +

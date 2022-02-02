@@ -20,7 +20,7 @@ obdrzi = intersect(stetje.nakupov$obcina, stetje.najemnin$obcina)
 
 tabela.obcin.ucenje = left_join(tabela.obcin.ucenje, povprecna.cena.obcina) %>%
   left_join(povprecna.najemnina.obcina) %>% mutate(povprecna.rentabilnost = 1200 * povprecna.najemnina / povprecna.cena) %>%
-  filter(obcina %in% obdrzi) %>% mutate(prebivalci.na.povrsino = stevilo.prebivalcev / povrsina) %>% select(-povrsina) %>% select(-stevilo.prebivalcev)
+  filter(obcina %in% obdrzi)
 
 
 tabela.obcin.ucenje.rentabilnost = tabela.obcin.ucenje %>% select(-povprecna.najemnina) %>% select(-povprecna.cena)
@@ -53,12 +53,13 @@ vektor.koeficientov.najemnina = unname(summary(lin.model.najemnina)$coefficients
 vektor.koeficientov.rentabilnost = unname(summary(lin.model.rentabilnost)$coefficients[,1][-1])
 
 linearni.modeli = tibble("znacilnost" = c(
-  "skupni prirast prebivalstva",
+  "površina",
+  "število prebivalcev",
+  "skupni prirast",
   "indeks staranja",
   "število študentov",
   "stopnja delovne aktivnosti",
-  "bruto mesečna plača",
-  "prebivalci na površino"
+  "bruto mesečna plača"
 ),
                          "koeficient lm cen" = round(vektor.koeficientov.cena, 2),
                          "koeficienti lm najemnin" = round(vektor.koeficientov.najemnina,2),

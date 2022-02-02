@@ -131,7 +131,7 @@ source("analiza/analiza.r", encoding="UTF-8")
 kable(linearni.modeli)
 ```
 
-
+Linearni model kaže, da 
 
 #### Gručenje
 
@@ -149,7 +149,7 @@ inputPanel(
 
 renderPlot({diagram.skupine(primeri, primeri$oznaka, skupine(input$n.skupin), input$n.skupin)})
 ```
-Tipi stanovanj so gručeni na podlagi hierarhičnega razvrščanja v skupine. Število skupin na grafu je v osnovi nastavljeno na 3, saj pri k = 3 nastane prvo "koleno", lahko pa poljubno nastavimo željeno stevilo skupin. Za primer treh skupin vidimo, da so si podobne nepremičnine, ki so predvsem pogoste pri storitvenih dejavnostih. Slednje nepremičnine imajo očitno razmeroma visoke nakupne cene, vendar je pri njih moč doseči dokaj visoko mesečno najemnino. Drugo skupino sestavljata stanovanja in turisticni nastanitveni objekti, ki z visokimi cenami in nizkimi najemninami med najmanj donosnimi, kar smo lahko videli tudi na grafu rentabilnosti glede na tip prostora. Tretjo skupino pa sestavljajo bolj obrtno naravnani tipi nepremičnin (industrijski, kmetijski, tehnicni objekti,...), ki imajo sicer relativno nizke najemnine toda z dokaj nizkimi nakupnimi cenami v povprečju ohranjajo dobro rentabilnost.
+Tipi stanovanj so gručeni na podlagi hierarhičnega razvrščanja v skupine. Število skupin na grafu je v osnovi nastavljeno na 3, saj pri k = 3 nastane prvo "koleno", lahko pa poljubno nastavimo željeno stevilo skupin. Za primer treh skupin vidimo, da so v prvi skupini nepremičnine, ki so predvsem pogoste pri storitvenih dejavnostih. Slednje nepremičnine imajo očitno razmeroma visoke nakupne cene, vendar je pri njih moč doseči dokaj visoko mesečno najemnino. Drugo skupino sestavljata stanovanja in turisticni nastanitveni objekti, ki z visokimi cenami in nizkimi najemninami med najmanj donosnimi, kar smo lahko videli tudi na grafu rentabilnosti glede na tip prostora. Tretjo skupino pa sestavljajo bolj obrtno naravnani tipi nepremičnin (industrijski, kmetijski, tehnicni objekti,...), ki imajo sicer relativno nizke najemnine toda z dokaj nizkimi nakupnimi cenami v povprečju ohranjajo dobro rentabilnost.
 
 ***
 

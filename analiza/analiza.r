@@ -20,7 +20,7 @@ obdrzi = intersect(stetje.nakupov$obcina, stetje.najemnin$obcina)
 
 tabela.obcin.ucenje = left_join(tabela.obcin.ucenje, povprecna.cena.obcina) %>%
   left_join(povprecna.najemnina.obcina) %>% mutate(povprecna.rentabilnost = 1200 * povprecna.najemnina / povprecna.cena) %>%
-  filter(obcina %in% obdrzi)
+  filter(obcina %in% obdrzi) %>% mutate(prebivalci.na.povrsino = stevilo.prebivalcev / povrsina) %>% select(-povrsina) %>% select(-stevilo.prebivalcev)
 
 
 tabela.obcin.ucenje.rentabilnost = tabela.obcin.ucenje %>% select(-povprecna.najemnina) %>% select(-povprecna.cena)
@@ -47,12 +47,19 @@ print(lin.model.rentabilnost)
 lm.napovedi.rentabilnost = predict(lin.model.rentabilnost, newdata = tabela.obcin.ucenje.rentabilnost)
 print(lm.napovedi.rentabilnost)
 
-vektor.imen = names(summary(lin.model.cena)$coefficients[,1][-1])
+
 vektor.koeficientov.cena = unname(summary(lin.model.cena)$coefficients[,1][-1])
 vektor.koeficientov.najemnina = unname(summary(lin.model.najemnina)$coefficients[,1][-1])
 vektor.koeficientov.rentabilnost = unname(summary(lin.model.rentabilnost)$coefficients[,1][-1])
 
-linearni.modeli = tibble("znacilnost" = vektor.imen,
+linearni.modeli = tibble("znacilnost" = c(
+  "skupni prirast prebivalstva",
+  "indeks staranja",
+  "število študentov",
+  "stopnja delovne aktivnosti",
+  "bruto mesečna plača",
+  "prebivalci na površino"
+),
                          "koeficient lm cen" = round(vektor.koeficientov.cena, 2),
                          "koeficienti lm najemnin" = round(vektor.koeficientov.najemnina,2),
                          "koeficienti lm rentabilnost" = round(vektor.koeficientov.rentabilnost,2))

@@ -1,31 +1,5 @@
 # 3. faza: Vizualizacija podatkov
 
-#Če pogledamo povprecne najemnine glede na obcino hitro opazimo, da so nekater podatki vnešeni v etn
-#verjetno popačeni. Npr. dejstvo , da je povprecna mesečna najemnina v Izoli 68 000 €.
-#Če pogledamo nazaj v tabelo najemnin opazimo, da je nekje v podatkih navedena 86 milijonska najemnina,
-#kar je skoraj gotovo napačno. Primerov, kjer so navedene najemnine očitno napačne je več, podbne primere
-#pa najdemo tudi v tabeli nakupov. Veliko pa je tudi primerov, kjer so najemnine/prodajne cene 0€ ali pa nekaj centov.
-#Tudi tu gre verjetno za neke fiktivne posle. Nesmiselne oz. ničelne vnose najdemo tudi pri površinah.
-#Zato sem se v tabeli nakupov odločil odstraniti vse kupoprodajne posle s ceno nad 10 000 € na kvadratni meter.
-#V tabeli najemnin pa vse posle z mesecno najemnino nad 
-
-
-
-
-
-#obcine.najemnine = tabela.najemnin %>% filter(tip.prostora == "Stanovanje")  %>% group_by(obcina, leto.posla) %>% mutate(najemnina.na.kvadratni.meter = mean(mesecna.najemnina / povrsina)) %>%
-#  select(obcina, najemnina.na.kvadratni.meter, leto.posla) %>% distinct()
-#
-#obcine.nakupi = tabela.nakupov %>% filter(tip.prostora == "Stanovanje")  %>% group_by(obcina, leto.posla) %>% mutate(cena.na.kvadratni.meter = mean(prodajna.cena / povrsina)) %>%
-#  select(obcina, cena.na.kvadratni.meter, leto.posla) %>% distinct()
-#
-#tabela.obcin.razsirjeno = left_join(tabela.obcin, obcine.nakupi) %>% left_join(obcine.najemnine)
-#
-#nakupi.najemnine = left_join(obcine.nakupi, obcine.najemnine) %>% 
-#  mutate(razmerje.najemnine.in.cene = cena.na.kvadratni.meter / najemnina.na.kvadratni.meter)
-
-
-
 ##rentabilnost, cene in najemnine skozi cas glede na tip prostora
 
 
@@ -81,37 +55,6 @@ graf.skozi.cas = function(tip, aspekt){
 
 
 
-
-#if (tip != "Vse"){
-#  najemnine.skozi.cas = tabela.najemnin %>% filter(tip.prostora == tip) %>% group_by(leto.posla) %>%
-#    mutate(povprecna.najemnina = mean(mesecna.najemnina / povrsina)) %>% select(leto.posla, povprecna.najemnina) %>% distinct()
-#  
-#  cene.skozi.cas = tabela.nakupov %>% filter(tip.prostora == tip) %>% group_by(leto.posla) %>%
-#    mutate(povprecna.cena = mean(prodajna.cena / povrsina)) %>% select(leto.posla, povprecna.cena) %>% distinct()
-#  
-#  cas = cene.skozi.cas %>% left_join(najemnine.skozi.cas)
-#  cas = cas %>% mutate("rentabilnost (%)" = 1200 * povprecna.najemnina / povprecna.cena)
-#  
-#  print(cas %>% ggplot(mapping = aes(x = leto.posla, y = `rentabilnost (%)`)) + geom_line() + labs(x = "Leto", y = "Rentabilnost v %", title = sprintf("Rentabilnost skozi čas (%s)", tip)))
-#  print(cas %>% ggplot(mapping = aes(x = leto.posla, y = povprecna.cena)) + geom_line() + labs(x = "Leto", y = bquote("Cena na "~m^2), title = sprintf("Cena skozi čas (%s)", tip)))
-#  print(cas %>% ggplot(mapping = aes(x = leto.posla, y = povprecna.najemnina)) + geom_line() + labs(x = "Leto", y = bquote("Najemnina na "~ m^2), title = sprintf("Višina najemnin skozi čas (%s)", tip)))
-#} else{
-#  najemnine.skozi.cas = tabela.najemnin %>% group_by(leto.posla) %>%
-#    mutate(povprecna.najemnina = mean(mesecna.najemnina / povrsina)) %>% select(leto.posla, povprecna.najemnina) %>% distinct()
-#  
-#  cene.skozi.cas = tabela.nakupov %>% group_by(leto.posla) %>%
-#    mutate(povprecna.cena = mean(prodajna.cena / povrsina)) %>% select(leto.posla, povprecna.cena) %>% distinct()
-#  
-#  cas = cene.skozi.cas %>% left_join(najemnine.skozi.cas)
-#  cas = cas %>% mutate("rentabilnost (%)" = 1200 * povprecna.najemnina / povprecna.cena)
-#  
-#  print(cas %>% ggplot(mapping = aes(x = leto.posla, y = `rentabilnost (%)`)) + geom_line() + labs(x = "Leto", y = "Rentabilnost v %", title = sprintf("Rentabilnost skozi čas (%s)", tip)))
-#  print(cas %>% ggplot(mapping = aes(x = leto.posla, y = povprecna.cena)) + geom_line() + labs(x = "Leto", y = bquote("Cena na "~m^2), title = sprintf("Cena skozi čas (%s)", tip)))
-#  print(cas %>% ggplot(mapping = aes(x = leto.posla, y = povprecna.najemnina)) + geom_line() + labs(x = "Leto", y = bquote("Najemnina na "~ m^2), title = sprintf("Višina najemnin skozi čas (%s)", tip)))
-#}
-#
-
-
 # zemljevid rentabilnosti glede na statistične regije
 
 
@@ -151,41 +94,6 @@ slo.regije.centroidi = slo.regije.centroidi %>% rownames_to_column() %>%
     regija = replace(regija, regija == "Spodnjeposavska", "Posavska")
   )
 slo.regije.centroidi %>% write_csv("podatki/regije-centroidi.csv")
-#print(slo.regije.centroidi)
-
-#ggplot() +
-#  geom_polygon(
-#    data = slo.regije.poligoni,
-#    mapping = aes(long, lat, group = group),
-#    color = 'black',
-#    fill = 'white'
-#  ) +
-#  coord_map() +
-#  geom_text(
-#    data = slo.regije.centroidi,
-#    mapping = aes(x = long, y = lat, label = regija)
-#  )
-#
-#slo.regije.poligoni %>% ggplot() +
-#  geom_polygon(
-#    mapping = aes(long, lat, group = group),
-#    color = "grey",
-#    fill = "white"
-#  ) +
-#  coord_map() +
-#  geom_text(
-#    data = slo.regije.centroidi,
-#    mapping = aes(x = long, y = lat, label = regija),
-#    size = 3
-#  ) +
-#  theme_classic() +
-#  theme(
-#    axis.line = element_blank(),
-#    axis.ticks = element_blank(),
-#    axis.text = element_blank(),
-#    axis.title = element_blank()
-#  )
-#
 
 #Pripadnost občin regijam
 

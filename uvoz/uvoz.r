@@ -58,9 +58,6 @@ for (i in 2013:2020){
   
 }
 
-#FML = tabela.najemnin
-
-#tabela.najemnin = FML
 
 tabela.najemnin = tabela.najemnin %>% mutate(obcina = tolower(obcina)) %>% mutate(obcina = str_to_sentence(obcina)) %>%
   select(-id.posla)
@@ -182,7 +179,6 @@ tabela.nakupov = tabela.nakupov %>% mutate(tip.prostora = as.factor(tip.prostora
 tabela.nakupov = tabela.nakupov %>% filter(povrsina >= (uporabna.povrsina) & uporabna.povrsina >= 0.7 * povrsina) %>% 
   filter(prodajna.cena >= 10) %>% filter(prodajna.cena / povrsina <= 10000)
 
-#print(tabela.nakupov)
 
 
 
@@ -247,7 +243,6 @@ tabela.obcin = tabela.obcin %>% filter(leto != 2021) %>% filter(leto >= 2013) %>
 tabela.obcin = tabela.obcin %>% mutate(obcina = str_replace(obcina, "([:alpha:]*)/[:alpha:]*", "\\1")) %>%
   mutate(obcina = str_replace(obcina, "([:alpha:]*)\\s-\\s([:alpha:]*)", "\\1-\\2"))
 
-#print(tabela.obcin)
 
 
 
@@ -263,29 +258,7 @@ tabela.obcin = tabela.obcin %>% mutate(obcina = str_replace(obcina, "([:alpha:]*
 
 
 
-#odstrani = function(){
-#  rm(etn_sifrant)
-#  rm(obcine_meritve7)
-#  rm(obcine_meritve6)
-#  rm(obcine_meritve5)
-#  rm(obcine_meritve4)
-#  rm(obcine_meritve3)
-#  rm(obcine_meritve2)
-#  rm(obcine_meritve1)
-#  rm(obcine.koncno)
-#  rm(zdruzi)
-#  rm(zdruzeno)
-#}
-#rm(zdruzi)
-#rm(zdruzeno)
-#rm(obcine.koncno)
-#rm(obcine)
-#rm(nakup.delistavb)
-#rm(nakup.posli)
-#rm(najem.delistavb)
-#rm(najem.posli)
-#
-#
+
 
 
 

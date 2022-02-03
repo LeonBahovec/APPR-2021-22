@@ -147,20 +147,16 @@ hc.kolena = function(dendrogram, od = 1, do = NULL, eps = 0.5) {
   if (is.null(do)) {
     do = n - 1
   }
-  # k.visina je tabela s štirimi stolpci
-  # (1) k, število skupin
-  # (2) višina združevanja
-  # (3) sprememba višine pri združevanju
-  # (4) koleno: ali je točka koleno?
+
   k.visina = tibble(
     k = as.ordered(od:do),
     visina = dendrogram$height[do:od]
   ) %>%
-    # sprememba višine
+
     mutate(
       dvisina = visina - lag(visina)
     ) %>%
-    # ali se je intenziteta spremembe dovolj spremenila?
+
     mutate(
       koleno = lead(dvisina) - dvisina > eps
     )

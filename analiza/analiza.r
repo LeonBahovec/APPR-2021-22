@@ -55,7 +55,7 @@ vektor.koeficientov.rentabilnost = unname(summary(lin.model.rentabilnost)$coeffi
 linearni.modeli = tibble("znacilnost" = c(
   "površina",
   "število prebivalcev",
-  "skupni prirast",
+  "skupni prirast prebivalstva",
   "indeks staranja",
   "število študentov",
   "stopnja delovne aktivnosti",

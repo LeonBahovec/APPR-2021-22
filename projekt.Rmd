@@ -22,13 +22,14 @@ source("lib/libraries.r", encoding="UTF-8")
 ## Izbira teme
 
 ***
-V zadnjem času smo priča vse večjemu pregrevanju gospodarstva in posledično inflaciji cen. Ker so v Sloveniji naložbe v nepremičnine znane kot praviloma varne so precej pogoste cene nepremičnin in najemnin pa so posledično vse višje. Zato sem se v projektni nalogi odločil analizirati nepremičninski trg v Sloveniji. Predvsem se bom  osredotočil na višino najemnin in pogodbenih cen pri nepremičninskih poslih. Poizkusil bom tudi ugotoviti, kaj se dogaja z rentabilnostjo oz. donosnostjo morebitne naložbe v nepremičnino. Zanima pa me tudi, kako demografski kazalci vplivajo na cene in najemnine nepremičnin v posameznih slovenskih občinah. 
 
+
+V zadnjem času smo priča vse večjemu pregrevanju gospodarstva in posledično inflaciji cen. Naložbe v nepremičnine veljajo za razmeroma varne, zato povpraševanje, ki ga spodbujajo nizke obrestne mere in dostopnost denarja ter inflacijska grožnja raste. V projektni nalogi zato skušam podati odgovor na vprašanje, kako donosna oz. rentabilna je naložba v nepremičnino ter ali in kako nekateri geo-demografski kazalci vplivajo na cene nepremičnin v posameznih slovenskih občinah. 
 
 
 ## Obdelava, uvoz in čiščenje podatkov
 
-Podatke o nepremičninskih poslih sem pridobil iz evidence trga nepremičnin, ki jih zagotavlja [GURS](https://egp.gu.gov.si/egp/). Podatke o demografskih kazalcih pa v [SURS-ovi podatkovni bazi](https://pxweb.stat.si/SiStatData/pxweb/sl/Data/Data/2640010S.px/). Podatke sem nato uredil v sledeče 3 tabele, kot navedeno pri predstavitvi izbire teme projekta. 
+Podatke o nepremičninskih poslih sem pridobil iz evidence trga nepremičnin, ki jih zagotavlja [GURS](https://egp.gu.gov.si/egp/). Podatke o demografskih kazalcih pa v [SURS-ovi podatkovni bazi](https://pxweb.stat.si/SiStatData/pxweb/sl/Data/Data/2640010S.px/). Podatke sem nato uredil v sledeče tri tabele, kot navedeno pri predstavitvi izbire teme projekta. 
 
 #### Glave tabel 1-3:
 
@@ -36,17 +37,16 @@ Podatke o nepremičninskih poslih sem pridobil iz evidence trga nepremičnin, ki
 
 ```{r uvoz}
 source("uvoz/uvoz.r", encoding="UTF-8")
-kable(head(tabela.najemnin), caption = "Tabela 1: najemniški posli v sloveniji 2013 - 2020")
-kable(head(tabela.nakupov), caption = "Tabela 2: kupoprodajni posli v sloveniji 2013 - 2020")
-kable(head(tabela.obcin), caption = "Tabela 3: tabela demografskih kazalcev občin 2013 - 2020")
+kable(head(tabela.najemnin), caption = "Tabela 1: Najemniški posli v Sloveniji 2013 - 2020")
+kable(head(tabela.nakupov), caption = "Tabela 2: Kupoprodajni posli v Sloveniji 2013 - 2020")
+kable(head(tabela.obcin), caption = "Tabela 3: Tabela demografskih kazalcev občin 2013 - 2020")
 ```
 
 #### ETN
 
-Preden začnem z analizo, naj najprej omenim nekaj težav na katere sem naletel pri evidence trga nepremičnin (ETN), ki jo zagotavlja GURS. ETN načeloma vsebuje vse kupoprodajne ter najemne posle za dano leto. Vendar že tu so podatki z vidika objektivne oz. natančne analize nepremičninskega trga rahlo neugodni. Beleženje poslov v ETN namreč že več let ni več obvezno za fizične osebe, temveč so v ETN dolžne poročati le še pravne osebe. Slednje pa imajo morda drugačne karakteristike poslovanja kot bi to imele fizične osebe. Prav tako, pa je velika težava sam način poročanja v ETN, ki se je izkazal za precej nestrukturiranega.  Nekatere nepremičnine imajo npr. v podatkih jasno navedene in ločene kleti, garaže ipd. druge ne. Velikokrat je pod enim poslom naštetih več različnih prostorov, kar onemogoča vrednotenje posamezne nepremičnine. Prav tako, je očitno veliko podatkov povsem napačnih (npr. 86 milijonska mesečna najemnina za stanovanje veliko nekaj deset kvadratnih metrov) ali pa fiktivnih (npr. kar nekaj poslov z ceno ali višino najemnine 0. Potem spet težava nastane, pri vpisovanju površin in uporabnih površin stavb. Glede na zakonsko določen način izmere, površina vsebuje vse uporabne površine, toda v nekaj deset tisočih primerih je zavedena uporabna površina višja od površine. GURS torej kot kaže ne skrbi oz. slabo skrbi za preverjanje točnosti vnosov v ETN.
+Preden začnem z analizo, naj omenim nekaj težav, na katere sem naletel pri evidenci trga nepremičnin (ETN), ki jo zagotavlja GURS. ETN načeloma vsebuje vse kupoprodajne ter najemne posle za dano leto. Vendar so ti podatki z vidika objektivne oz. natančne analize nepremičninskega trga rahlo neugodni. Beleženje poslov v ETN namreč že več let ni več obvezno za fizične osebe, temveč so v ETN dolžne poročati le še pravne osebe. Slednje pa imajo morda drugačne značilnosti poslovanja kot bi to imele fizične osebe. Prav tako je težava sam način poročanja v ETN, ki se je izkazal za precej nestrukturiranega. Nekatere nepremičnine imajo npr. v podatkih jasno navedene in ločene kleti, garaže ipd. druge ne. Velikokrat je pod enim poslom naštetih več različnih prostorov, kar onemogoča vrednotenje posamezne nepremičnine. Prav tako je  veliko podatkov očitno povsem napačnih (npr. 86 milijonska mesečna najemnina za stanovanje veliko nekaj deset kvadratnih metrov) ali pa fiktivnih (npr. kar nekaj poslov s ceno ali višino najemnine 0). Poročevalci imajo očitno tudi težave  pri vpisovanju površin in uporabnih površin stavb. Glede na zakonsko določen način izmere, površina zajema celotno uporabno površino, toda v nekaj deset tisočih primerih je zavedena uporabna površina višja od površine.
 
-Zaradi vseh naštetih težav vhodni podatki pridobljeni iz ETN niso nujno zanesljivi. Zato tudi rezultati analize niso nujno povsem točni, vendarle pa se zdi, da v kolikor odstranimo ekstremne vrednosti in neuporabne vnose, dobimo vsaj približen vpogled v zakonitosti trga nepremičnin v Sloveniji.
-
+Ob pregledu surovih podatkov lahko opazimo, da ETN nima vgrajenih niti osnovnih logičnih in vsebinskih kontrol nad pravilnostjo vnosa podatkov oz. da je kontrola slaba.  Zaradi vseh naštetih težav vhodni podatki pridobljeni iz ETN niso nujno zanesljivi. Zato tudi rezultati analize niso nujno povsem točni, vendar pa se zdi, da v kolikor odstranimo nekatere očitno napačne ali ekstremne vrednosti in neuporabne vnose, dobimo vsaj približen vpogled v zakonitosti trga nepremičnin v Sloveniji.
 
 ***
 
@@ -60,7 +60,7 @@ source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 
 
 ```
-Za začetek si oglejmo gibanje cen in višin nepremičnin v zadnjih nekaj letih. Na prvem grafu lahko opazujemo gibanje cen, višin nepremičnin in rentabilnosti čas glede na različne tipe prostora. Vidimo lahko, da tako cene nepremičnin kot najemnine v povprečju naraščajo. Z vidika morebitne investicije se to načeloma zdi dober znak, vendale pa je rast rentabilnosti bolj zadržana. Najemnine namreč v mnogih sektorjih ne dohitevajo strme rasti cen nepremičnin. Sploh npr. pri stanovanjih, ki so pri varčevalcih zelo pogosta naložba v nepremičnine, rentabilnost pada. Zato velja biti ob naložbi v nepremičnine trenutno, sploh v luči visokih rasti cen in morebitnega nastajanja nepremičninskega balona, previden.
+Za začetek si oglejmo gibanje cen nepremičnin in višine najemnin v zadnjih nekaj letih. Opozoriti velja, da primerjamo po eni strani ceno kvadratnega metra nepremičnine z višino najemnine kvadratnega metra nepremičnine, čeprav se prvi podatki nanašajo na posle kupoprodajnega trga drugi pa na najemniški trg in ne razpolagamo za isto nepremičnino s podatkom o njeni kuprodajni ceni kot tudi višini najemnine. 
 
 ```{r izbira.tipa, echo=FALSE}
 inputPanel(
@@ -99,14 +99,16 @@ inputPanel(
 ```{r graf1, echo=FALSE}
 renderPlot({graf.skozi.cas(input$tip.prostora, input$tip.grafa)})
 ```
+Na zgornjem grafu lahko opazujemo gibanje cen, višin nepremičnin in rentabilnosti skozi čas glede na različne tipe prostora. Vidimo lahko, da tako cene nepremičnin kot najemnine v povprečju naraščajo. Z vidika morebitne investicije se to načeloma zdi dober znak, vendale pa je rast rentabilnosti, če opazujemo zgolj donos iz najemnine bolj zadržana. Rast najemnin namreč pri določenih tipih nepremičn ne dohiteva rasti cen nepremičnin. Sploh pri stanovanjih, ki so pri varčevalcih zelo pogosta naložbena nepremičnina, rentabilnost donosa najemnin pada. Zato velja biti ob naložbi v nepremičnine trenutno, sploh v luči visokih rasti cen in morebitnega nastajanja nepremičninskega balona, previden. 
+Poudariti velja, da je donos naložbe v nepremičnino sestavljen iz dveh delov, po eni strani morebitnega kapitalskega dobička (izgube), ki mu moramo prišteti donos v obliki najemnine. V nadaljevanju se bom osredotočil primarno na rentabilnost donosa najemnine.
 
-Sedaj pa poglejmo, kje najdemo najbolj donosne naložbe v nepremičnine. Kot smo lahko opazovali že v prvem grafu, se gibanje cen nepremičnin precej spreminja v odvisnosti od tipa napremičnine. Zato sedaj opazujmo povprečno donosnost glede na tip prostora v zadnjih 8 letih. Vidimo, da je najnižja letna donosnost prav pri stanovanjih in stanovanjskih hišah. Zdi se torej, da bi bila bolj donosna naložba v poslovno orientirane prostore (gostinski lokali, industrijski prostori, pisarniški prostori,...) kot v prostore za bivanje. Vendarle pa izračunana donosnost kaže le razmrje med povprečno letno najemnino in povprečno ceno na kvadratni meter površine. Morebitni višji stroški vzdrževanja, ki bi nastali ob lastništvu poslovnega prostora tu torej niso všteti, zato bi bilo z vidika rentabilnosti konkretne nepremičnine pomembno analizirati tudi stroške njenega vzdrževanja, saj ti tudi vplivajo na končno rentabilnost.
+Poglejmo torej, kje najdemo najbolj donosne naložbe v nepremičnine. Kot smo lahko opazovali že v prvem grafu, se gibanje cen nepremičnin precej spreminja v odvisnosti od tipa napremičnine. Zato na naslednjem grafu opazujemo povprečno donosnost glede na tip prostora v zadnjih osmih letih. Vidimo, da je najnižja letna donosnost prav pri stanovanjih in stanovanjskih hišah. Zdi se torej, da bi bila bolj donosna naložba v poslovno orientirane prostore (gostinski lokali, industrijski prostori, pisarniški prostori,...) kot v prostore za bivanje. Vendarle pa izračunana donosnost kaže le razmerje med povprečno letno najemnino in povprečno ceno na kvadratni meter površine. Morebitni višji stroški vzdrževanja, ki bi nastali ob lastništvu poslovnega prostora tu niso všteti, zato bi bilo z vidika rentabilnosti konkretne nepremičnine pomembno analizirati tudi stroške njenega vzdrževanja, saj tudi ti vplivajo na končno rentabilnost.
 
 ```{r graf2}
 print(graf.rentabilnost.tip.prostora)
 ```
 
-Na cene in višine najemnin nepremičnin pa zelo pomembno vpliva lokacija. Na grafu 3 in 4 sem zato pripravil zemljevida povprečne rentabilnosti in ter povprečnih višin najemnin na kvadratni meter glede na regijo. Z vidika donsnosti je najbolj optimalna Pomurska regija, kjer so v povprečju cene nepremičnin med nižjimi. Osrednjeslovenska ter obalno-kraška regija pa kljub temu, da imata najvišje najemnine v Sloveniji, dosegata najslabše rezultate kar se tiče rentabilnosti. To kaže na izredno visoko rast cen sploh npr. v Ljubljani, ki igra osredno vlogo pri kazalcih osrednjeslovenske regije, in kjer so trenutno naložbe v nepremičninski trg izredno visoke. Zdi se, da trenutno vlagatelji precenjujejo vrednost višine najemnin in so pripravljeni plačati nesorazmerno višje cene za le te. Pri iskanju donosne naložbe moramo torej biti morda pripravljeni sprejeti nekoliko nižje dohodke s strani najemnin v zameno za cenejšo nakupno ceno nepremičnine.
+Na cene in višine najemnin nepremičnin zelo pomembno vpliva lokacija. V nadeljevanju sem zato pripravil zemljevida povprečne rentabilnosti ter povprečnih višin najemnin na kvadratni meter glede na regijo. Z vidika donosnosti je najbolj optimalna Pomurska regija, kjer so v povprečju cene nepremičnin med nižjimi. Osrednjeslovenska ter Obalno-Kraška regija pa kljub temu, da imata najvišje najemnine v Sloveniji, dosegata najslabše rezultate, kar se tiče rentabilnosti. To kaže na izredno visoko rast cen sploh npr. v Ljubljani, ki igra osrednjo vlogo pri kazalcih Osrednjeslovenske regije, in kjer so trenutno naložbe v nepremičninski trg izredno visoke. Zdi se, da trenutno vlagatelji precenjujejo vrednost višine najemnin in so pripravljeni plačati nesorazmerno višje cene za nakup le teh. Pri iskanju donosne naložbe moramo torej biti morda pripravljeni sprejeti nekoliko nižje najemnine v zameno za relativno cenejšo nakupno ceno nepremičnine.
 
 ```{r graf34, echo=FALSE, fig.show="hold", out.width="50%"}
 plot(regije.zemljevid.rentabilnost)
@@ -120,9 +122,9 @@ plot(regije.zemljevid.najemnine)
 
 #### Linearni model
 
-Kot navedeno v uvodu, pa me je zanimalo tudi to, kako na višine najemnin in cen nepremičnin znotraj posamezne vplivajo njeni demografski kazalci. V luči tega sem sestavil linearni regresijski modele za napovedovanje višin najemnin, cen ter rentabilnosti v odvisnosti od demografskih značilnosti občine. 
+Kot navedeno v uvodu, me je zanimalo tudi to, kako na višine najemnin in cen nepremičnin znotraj posamezne občine vplivajo njeni geo-demografski kazalci. V luči tega sem sestavil linearne regresijske modele za napovedovanje višin najemnin, cen ter rentabilnosti v odvisnosti od demografskih značilnosti občine. 
 
-Dobili smo linearne modele s sledečimi koeficienti glede na demografsko značilnost:
+Dobili smo linearne modele s sledečimi koeficienti glede na geo-demografsko značilnost:
 ```{r analiza, include=FALSE}
 source("analiza/analiza.r", encoding="UTF-8")
 
@@ -131,7 +133,8 @@ source("analiza/analiza.r", encoding="UTF-8")
 kable(linearni.modeli)
 ```
 
-Linearni model kaže, da 
+Rezultati linearnega modela kažejo, da na višino najemnin ter cen geo-demografski kazalci vplivajo podobno. Višji skupni prirast prebivalstva, indeks staranja, stopnja delovne aktivnosti ter bruto mesečna plača povzorčajo višje cene in mesečne najemnine znotraj občine. V obratni smeri na cene in najemnine, glede na rezultat linearnega modela, delujeta število študentov v občini ter njena površina. 
+Največji odklon med koeficienti linearnega modela za cene in najemnine je viden pri stopnji delovne aktivnosti. Višja stopnja delovne aktivnosti naj bi močno vplivala na višanje cen v občini. Ker je njen vpliv, v luči rezultatov linearnega modela, na najemnine nižji, posledično stopnja delovne poglavitno vpliva na padec rentabilnost znotraj občine.
 
 #### Gručenje
 
@@ -152,5 +155,14 @@ renderPlot({diagram.skupine(primeri, primeri$oznaka, skupine(input$n.skupin), in
 Tipi stanovanj so gručeni na podlagi hierarhičnega razvrščanja v skupine. Število skupin na grafu je v osnovi nastavljeno na 3, saj pri k = 3 nastane prvo "koleno", lahko pa poljubno nastavimo željeno stevilo skupin. Za primer treh skupin vidimo, da so v prvi skupini nepremičnine, ki so predvsem pogoste pri storitvenih dejavnostih. Slednje nepremičnine imajo očitno razmeroma visoke nakupne cene, vendar je pri njih moč doseči dokaj visoko mesečno najemnino. Drugo skupino sestavljata stanovanja in turisticni nastanitveni objekti, ki z visokimi cenami in nizkimi najemninami med najmanj donosnimi, kar smo lahko videli tudi na grafu rentabilnosti glede na tip prostora. Tretjo skupino pa sestavljajo bolj obrtno naravnani tipi nepremičnin (industrijski, kmetijski, tehnicni objekti,...), ki imajo sicer relativno nizke najemnine toda z dokaj nizkimi nakupnimi cenami v povprečju ohranjajo dobro rentabilnost.
 
 ***
+
+
+Na podlagi gornje analize tako lahko podamo dve ključni ugotovitvi:
+
+1.	Primerjava najemnin iz oddaje stanovanj pokaže, da so stanovanja v območjih, kjer so njihove nakupne cene najvišje (Ljubljana, Koper), kljub visokim najemninam, niso tako donosna, da bi upravičila visoke nakupne cene teh nepremičnin. Kljub priljubljenosti le-teh pri vlagateljih bi slednji večjo donosnost dosegli pri stanovanjih na odročnejših območjih, npr. v Prekmurju.
+2.	Na drugi strani se je izkazalo, da bodo z najemninami doseženimi z nakupom poslovne nepremičnine (npr. industrijskega objekta) vlagatelji lahko dosegli večjo donosnost kot z nakupom stanovanja.
+
+Kljub nekaterim omejitvam te analize, bi torej lahko zaključili, da najbolj priljubljene nepremičnine investitorjem ne prinašajo tudi največje donosnosti in imajo na nepremičninskem trgu, če je donosnost tista, ki jo zasledujejo, tudi boljše alternative.
+
 
 
